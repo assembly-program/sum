@@ -1,5 +1,5 @@
 # sum
-This program receive a variable number of arguments and print out the sum
+an assembly program that sum up an unknown number of arguments and print the result.
 
 # Build & run
 - the make file uses the as and ld commands to build the program
