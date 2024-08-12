@@ -5,8 +5,12 @@
 .include "lib/sys_exit.s"
 
 .section .data
-errormsg: .string "error: invalid input\nthe provided arguments should only contain positive or negative numbers, other characters are not allowed\n"
+errormsg: .string "error: invalid input\n"
 errormsg_len: .quad . - errormsg
+
+usagemsg: .string "Usage: sum [int | float]...\n"
+usagemsg_len: .quad . - usagemsg
+
 
 .section .text
 .global  _start
@@ -17,7 +21,7 @@ _start:
 	addq $8, %rbp
 
 	cmpq $1, %rbx
-	je   exit_success
+	je   exit_usage
 
 section0:
 .LP0:
@@ -39,11 +43,16 @@ section1:
 	movsd %xmm4, %xmm0
 	movq  $-1, %rdi
 	call  printNumber
-
 	writeln $1
+
 exit_success:
 	exit $0
 
+exit_usage:
+	write $1, usagemsg(%rip), usagemsg_len(%rip)
+	exit $-1
+
 exit_error:
 	write $1, errormsg(%rip), errormsg_len(%rip)
-	exit $-1
+	write $1, usagemsg(%rip), usagemsg_len(%rip)
+	exit $-2
