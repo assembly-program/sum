@@ -11,7 +11,7 @@ validation:
 
 	lodsb
 	cmpb $0, %al
-	je   exit_valid
+	je   exit_invalid
 	cmpb $'-', %al
 	je   .LPV0
 	cmpb $'.', %al
